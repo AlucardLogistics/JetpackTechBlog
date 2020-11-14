@@ -1,6 +1,7 @@
 package com.logistics.alucard.jetpackarchitectureblog.ui.auth
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.logistics.alucard.jetpackarchitectureblog.R
 import kotlinx.android.synthetic.main.fragment_launcher.*
 
-class LauncherFragment : Fragment() {
+class LauncherFragment : BaseAuthFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +36,8 @@ class LauncherFragment : Fragment() {
         }
 
         focusable_view.requestFocus()
+
+        Log.d(TAG, "LauncherFragment: ${viewModel.hashCode()}")
     }
 
     private fun navForgotPassword() {
@@ -48,6 +51,5 @@ class LauncherFragment : Fragment() {
     private fun navRegistration() {
         findNavController().navigate(R.id.action_launcherFragment_to_registerFragment)
     }
-
 
 }
