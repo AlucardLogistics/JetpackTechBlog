@@ -1,5 +1,6 @@
 package com.logistics.alucard.jetpackarchitectureblog.di.auth
 
+import android.content.SharedPreferences
 import com.logistics.alucard.jetpackarchitectureblog.api.auth.OpenApiAuthService
 import com.logistics.alucard.jetpackarchitectureblog.persistence.AccountPropertiesDao
 import com.logistics.alucard.jetpackarchitectureblog.persistence.AuthTokenDao
@@ -12,12 +13,10 @@ import retrofit2.Retrofit
 @Module
 class AuthModule{
 
-    // TEMPORARY
     @AuthScope
     @Provides
-    fun provideFakeApiService(): OpenApiAuthService {
-        return Retrofit.Builder()
-            .baseUrl("https://open-api.xyz")
+    fun provideFakeApiService(retrofitBuilder: Retrofit.Builder): OpenApiAuthService {
+        return retrofitBuilder
             .build()
             .create(OpenApiAuthService::class.java)
     }
@@ -28,13 +27,17 @@ class AuthModule{
         sessionManager: SessionManager,
         authTokenDao: AuthTokenDao,
         accountPropertiesDao: AccountPropertiesDao,
-        openApiAuthService: OpenApiAuthService
+        openApiAuthService: OpenApiAuthService,
+        sharedPreferences: SharedPreferences,
+        sharedPrefEditor: SharedPreferences.Editor
     ): AuthRepository {
         return AuthRepository(
             authTokenDao,
             accountPropertiesDao,
             openApiAuthService,
-            sessionManager
+            sessionManager,
+            sharedPreferences,
+            sharedPrefEditor
         )
     }
 

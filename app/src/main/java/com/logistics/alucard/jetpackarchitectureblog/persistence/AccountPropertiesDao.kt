@@ -14,7 +14,7 @@ interface AccountPropertiesDao {
     fun insertAndReplace(accountProperties: AccountProperties) : Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAndIgnore(accountProperties: AccountProperties): Long
+    fun insertOrIgnore(accountProperties: AccountProperties): Long
 
     @Query( "SELECT * FROM account_properties WHERE pk = :pk")
     fun searchByPk(pk: Int): AccountProperties?
